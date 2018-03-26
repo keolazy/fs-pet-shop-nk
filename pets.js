@@ -4,12 +4,12 @@
 
 'use strict';
 
-const fs = require('fs');
+const fs = require('fs'); // file system
 const path = require('path');
 const petsPath = path.join(__dirname, 'pets.json');
 
-const node = path.basename(process.argv[0]);
-const file = path.basename(process.argv[1]);
+const node = path.basename(process.argv[0]); // process.execPath
+const file = path.basename(process.argv[1]); // path to js file being executed
 const cmd = process.argv[2];
 
 if (cmd === 'read') {

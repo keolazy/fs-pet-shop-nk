@@ -84,7 +84,7 @@ const server = http.createServer((req, res) => {
         const kind = body.kind;
         const name = body.name;
 
-        if (Number.isNaN(age) || !kind || !name) {
+        if (Number.isNaN(age) || !kind || !name) { // if not all 3 params provided
           res.statusCode = 400;
           res.setHeader('Content-Type', 'text/plain');
           res.end('Bad Request');
