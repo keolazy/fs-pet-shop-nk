@@ -1,65 +1,40 @@
-'use strict'
-// Routers = GET, POST, PUT
-
-
 const express = require('express');
-const app = express();
 const fs = require('fs');
 const path = require('path');
-
+const app = express();
 let petsPath = path.join(__dirname, 'pets.json');
 let bodyParser = require('body-parser');
 
-// configure app to use bodyParser()
-
-// Create an Express Route
-// app.METHOD(path, handler)
-// res.send('hello world') => sends text response to client
-// Methods that response provides below
-// res.download, res.json, res.jsonp, res.render, res.sendFile
-
-app.use(bodyParser.json());
-
+app.use(bodyParser.json())
 
 app.get('/pets', (req, res) => {
-    fs.readFile(petsPath, 'utf8', (err, data) => {
+
+   fs.readFile(petsPath, 'utf8', (err, data) => {
       res.send(JSON.parse(data))
     })
 })
-
 app.get('/pets/:id', (req, res) => {
-    fs.readFile(petsPath, 'utf8', (err, data) => {
+
+   fs.readFile(petsPath, 'utf8', (err, data) => {
       if(err){
         console.error(err.stack);
-        return res.sendStatus(500);
+        return res.send(500);
       }
       let id = Number.parseInt(req.params.id);
-      if(id < 0 || id >= JSON.parse(data).length || Number.isNaN(id)){
+
+     if(id < 0 || id >= JSON.parse(data).length || Number.isNaN(id)){
         return res.sendStatus(404);
       }
       res.set('content-type', 'text/plain');
       res.send(JSON.parse(data)[id])
     })
 })
-// can store entire or statement as a variable
-
-
 app.post('/pets', (req, res) => {
-  fs.readFile(petsPath, 'utf8', (err, data) => {
-    let validBody = req.body.name || req.body.age || (req.body.age) || req.body.kind;
-    let noBody = !req.body.name && !req.body.age && !req.body.kind;
 
+ fs.readFile(petsPath, 'utf8', (err, data) => {
     if(err){
       return res.sendStatus(500);
     }
-
-    if(!validBody) {
-      return res.sendStatus(400)
-    }
-    else if(noBody) {
-      return res.sendStatus(404)
-    }
-
     let pets = JSON.parse(data);
     let pet = {
       "age": parseInt(req.body.age),
@@ -68,7 +43,8 @@ app.post('/pets', (req, res) => {
     };
     pets.push(pet);
     let newPet = JSON.stringify(pets);
-    fs.writeFile(petsPath, newPet, (err) => {
+
+   fs.writeFile(petsPath, newPet, (err) => {
       if(err){
         return sendStatus(500);
       }
@@ -80,43 +56,45 @@ app.post('/pets', (req, res) => {
 
 app.put('/pets/:id', (req, res) => {
   fs.readFile(petsPath, 'utf8', (err, data) => {
-    let id= Number.parseInt(req.params.id);
-    let parsedPetData = JSON.parse(data)[id]; // parsed data
+    let id = Number.parseInt(req.params.id);
+    let parsedPetData = JSON.parse(data)[id];
 
-    let pet = {
+   let pet = {
       "age": parseInt(req.body.age),
       "kind":req.body.kind,
       "name":req.body.name
     };
 
-    parsedPetData = pet;
+   parsedPetData = pet;
 
-  fs.writeFile('petsPath', parsedPetData, (err, data) => {
-      if(err) {
+   fs.writeFile('petsPath', parsedPetData, (err, data) => {
+      if(err){
         return sendStatus(500);
       }
       res.set('content-type', 'text/plain');
-      res.send(parsedPetData);
+      res.send(parsedPetData)
     })
   })
 })
 
 app.delete('/pets/:id', (req, res) => {
-  fs.readFile(petsPath, 'utf8', (err, readData) => {
-      let id = Number.parseInt(req.params.id);
 
-      let newData = JSON.parse(readData);
-      newData.splice(id,1);
-      let newerDta = JSON.stringify(newData);
-      console.log(newData)
+ fs.readFile(petsPath, 'utf8', (err, readData) => {
+    let id = Number.parseInt(req.params.id);
 
-  fs.writeFile(petsPath, newData, (err, data) => {
-    res.set('content-type', 'text/plain');
-    res.send(newData);
-    res.end();
+   let newData = JSON.parse(readData);
+    newData.splice(id, 1);
+    let newerData = JSON.stringify(newData);
+    console.log(newerData)
+    fs.writeFile(petsPath, newerData, (err, data) => {
+      res.set('content-type', 'text/plain');
+      res.send(newerData);
+      res.end()
     })
   })
 })
+
+
 
 
 app.use((req, res) => {

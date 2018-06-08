@@ -5,6 +5,7 @@ const app = express();
 let petsPath = path.join(__dirname, 'pets.json');
 let bodyParser = require('body-parser');
 app.use(bodyParser.json())
+
 app.get('/pets', (req, res) => {
     fs.readFile(petsPath, 'utf8', (err, data) => {
       res.send(JSON.parse(data))

@@ -1,4 +1,1 @@
-[{"age":"60","kind":"dog","name":"thatcher"},{"age":"30","kind":"cat","name":"bowie"},
-  {"age":"23","kind":"mongoose","name":"crule"},{"age":"55","kind":"person","name":"JJ Abrams"},
-  {"age":null},{"age":3,"kind":"parakeet","name":"Cornflake"},
-  {"age":3,"kind":"parakeet","name":"Cornflake"}]
+[{"age":"60","kind":"dog","name":"thatcher"},{"age":"23","kind":"mongoose","name":"crule"},{"age":"55","kind":"person","name":"JJ Abrams"},{"age":null},{"age":3,"kind":"parakeet","name":"Cornflake"},{"age":3,"kind":"parakeet","name":"Cornflake"}]
